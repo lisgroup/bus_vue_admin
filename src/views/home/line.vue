@@ -26,12 +26,26 @@
       </legend>
     </fieldset>
     <el-table v-loading="loading" :data="tableLine" border style="width: 100%">
-      <el-table-column prop="stationnum" label="编号" width="100" />
-      <el-table-column prop="stationname" label="站台" width="" />
+      <el-table-column prop="stationnum" label="编号" width="100">
+        <template slot-scope="scope">
+          <div @click="showForm(scope.row)">
+            {{ scope.row.stationnum }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="stationname" label="站台" width="">
+        <template slot-scope="scope">
+          <div @click="showForm(scope.row)">
+            {{ scope.row.stationname }}
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column label="进站时间" width="">
         <template slot-scope="scope">
-          <div v-for="item in scope.row.stationdetail" :key="item">
-            {{ item }}
+          <div @click="showForm(scope.row)">
+            <div v-for="item in scope.row.stationdetail" :key="item">
+              {{ item }}
+            </div>
           </div>
         </template>
       </el-table-column>
@@ -44,6 +58,9 @@
       @onFloatBtnClicked="handleReload()"
     />
     <Footer />
+    <el-dialog :visible="dialogVisible" title="微信定时通知配置" width="70%" @close="dialogVisible = false">
+      <form-component />
+    </el-dialog>
   </div>
 </template>
 
@@ -52,13 +69,15 @@ import fieldSet from '../../components/common/fieldSet'
 import FloatButton from '../../components/FloatButton'
 import { Footer } from '../../layout/components'
 import { line } from '@/api/bus'
+import FormComponent from '@/views/home/form_crontab.vue'
 
 export default {
   name: 'Lines',
   components: {
     fieldSet,
     FloatButton,
-    Footer
+    Footer,
+    FormComponent
   },
   data() {
     return {
@@ -69,7 +88,8 @@ export default {
       href: '',
       tableData: [],
       tableLine: [],
-      Flush: '刷新'
+      Flush: '刷新',
+      dialogVisible: false
     }
   },
   created() {
@@ -113,6 +133,10 @@ export default {
         return false
       }
       this.$router.push({ name: 'bus', query: { linename: line }})
+    },
+    showForm(row) {
+      console.log(row)
+      this.dialogVisible = true
     }
   }
 }
