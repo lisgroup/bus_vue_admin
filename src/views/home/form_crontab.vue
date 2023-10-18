@@ -49,7 +49,7 @@ export default {
         { value: 'day', label: '每天' },
         { value: 'hour', label: '每小时' },
         { value: 'hour-n', label: 'N小时' },
-        { value: 'month', label: '工作日' }
+        { value: 'weekday', label: '工作日' }
       ],
       rules: {
         cycle: [
