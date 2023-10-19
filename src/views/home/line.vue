@@ -4,7 +4,7 @@
     <fieldSet />
 
     <el-input
-      v-model="input"
+      v-model="lineName"
       placeholder="线路名称，例：快线1, 55"
       @keyup.enter.native="goSearch"
     >
@@ -58,8 +58,8 @@
       @onFloatBtnClicked="handleReload()"
     />
     <Footer />
-    <el-dialog :visible="dialogVisible" title="微信定时通知配置" width="70%" @close="dialogVisible = false">
-      <form-component />
+    <el-dialog :visible="dialogVisible" title="微信定时通知配置" width="70%" @close="closeDialog">
+      <form-component :rowData="selectedRowData" @close-dialog="closeDialog" />
     </el-dialog>
   </div>
 </template>
@@ -83,17 +83,19 @@ export default {
     return {
       loading: false,
       isShow: false,
-      input: '',
+      lineName: '',
       to: '',
       href: '',
       tableData: [],
       tableLine: [],
       Flush: '刷新',
-      dialogVisible: false
+      dialogVisible: false,
+      selectedRowData: null
     }
   },
   created() {
     this.href = this.$route.query
+    this.lineName = this.href.lineName
     this.handleReload()
   },
   methods: {
@@ -124,7 +126,7 @@ export default {
     },
 
     goSearch() {
-      const line = this.input
+      const line = this.lineName
       if (!line) {
         this.$message({
           message: '线路名称不能为空',
@@ -135,8 +137,14 @@ export default {
       this.$router.push({ name: 'bus', query: { linename: line }})
     },
     showForm(row) {
-      console.log(row)
+      // console.log(row)
       this.dialogVisible = true
+      row.lineid = this.href.lineID
+      row.linename = this.lineName
+      this.selectedRowData = row
+    },
+    closeDialog() {
+      this.dialogVisible = false;
     }
   }
 }

@@ -3,7 +3,7 @@
     <nav-bar />
     <fieldSet />
 
-    <el-input v-model="input" placeholder="线路名称，例：快线1, 55" @keyup.enter.native="goSearch">
+    <el-input v-model="lineName" placeholder="线路名称，例：快线1, 55" @keyup.enter.native="goSearch">
       <template slot="prepend">线路</template>
       <el-button slot="append" icon="el-icon-search" @click="goSearch">搜索</el-button>
     </el-input>
@@ -43,8 +43,8 @@ export default {
   data() {
     return {
       isShow: false,
-      input: '',
-      tableData: []
+      tableData: [],
+      lineName: ''
     }
   },
   created() {
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     goSearch() {
-      const line = this.input
+      const line = this.lineName
       if (!line) {
         this.$message({
           message: '线路名称不能为空',
@@ -60,7 +60,6 @@ export default {
         })
         return false
       }
-
       const query = { linename: line }
       this.$router.push({ name: 'bus', query })
 
@@ -72,7 +71,7 @@ export default {
     },
     handleCheck(index, row) {
       // keep-alive 实现前进后退不刷新
-      const query = row.lineid ? { lineID: row.lineid, to: row.line_from_to } : { href: row.link }
+      const query = row.lineid ? { lineID: row.lineid, to: row.line_from_to, lineName: this.lineName } : { href: row.link }
       this.$router.push({ name: 'line', query })
     },
 
@@ -81,7 +80,7 @@ export default {
       this.loading = true
       const line = this.$route.query.linename
       if (line) {
-        that.input = line
+        that.lineName = line
         that.goSearch()
       }
 

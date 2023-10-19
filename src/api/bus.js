@@ -7,3 +7,7 @@ export function search(params) {
 export function line(params) {
   return request.post('/api/bus/line', params)
 }
+
+export function notice_setting(params) {
+  return request.post('/api/bus/notice_setting', params)
+}
