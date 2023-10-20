@@ -7,10 +7,10 @@
           <el-select v-model="ruleForm.cycle" placeholder="选择周期" @change="handleSelectChange">
             <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
           </el-select>
-<!--          <el-input-number v-show="showHour" v-model="ruleForm.hour" :max="23" :min="0" label="小时" @change="handleHour" />-->
-<!--          <span v-show="showHour">小时</span>-->
-<!--          <el-input-number v-show="showMinute" v-model="ruleForm.minute" :max="59" :min="0" label="分钟" @change="handleMinute" />-->
-<!--          <span v-show="showMinute">分钟</span>-->
+          <!--          <el-input-number v-show="showHour" v-model="ruleForm.hour" :max="23" :min="0" label="小时" @change="handleHour" />-->
+          <!--          <span v-show="showHour">小时</span>-->
+          <!--          <el-input-number v-show="showMinute" v-model="ruleForm.minute" :max="59" :min="0" label="分钟" @change="handleMinute" />-->
+          <!--          <span v-show="showMinute">分钟</span>-->
         </el-col>
       </el-row>
     </el-form-item>
@@ -18,7 +18,7 @@
       <el-row class="demo-autocomplete">
         <el-col :span="10">
           <el-form-item prop="date2">
-            <el-time-picker placeholder="选择时间" v-model="ruleForm.start_time" style="width: 100%;"></el-time-picker>
+            <el-time-picker v-model="ruleForm.start_time" placeholder="选择时间" style="width: 100%;" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -27,7 +27,7 @@
       <el-row class="demo-autocomplete">
         <el-col :span="10">
           <el-form-item prop="date2">
-            <el-time-picker placeholder="选择时间" v-model="ruleForm.end_time" style="width: 100%;"></el-time-picker>
+            <el-time-picker v-model="ruleForm.end_time" placeholder="选择时间" style="width: 100%;" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -147,7 +147,7 @@ export default {
               type: 'success'
             })
             // 触发自定义事件，通知index.vue关闭弹窗
-            this.$emit('close-dialog');
+            this.$emit('close-dialog')
           }).catch(err => {
             return err
           })

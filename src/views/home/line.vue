@@ -144,7 +144,7 @@ export default {
       this.selectedRowData = row
     },
     closeDialog() {
-      this.dialogVisible = false;
+      this.dialogVisible = false
     }
   }
 }
