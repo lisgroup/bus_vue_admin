@@ -25,32 +25,34 @@
         </button>
       </legend>
     </fieldset>
-    <el-table v-loading="loading" :data="tableLine" border style="width: 100%">
-      <el-table-column prop="stationnum" label="编号" width="100">
-        <template slot-scope="scope">
-          <div @click="showForm(scope.row)">
-            {{ scope.row.stationnum }}
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="stationname" label="站台" width="">
-        <template slot-scope="scope">
-          <div @click="showForm(scope.row)">
-            {{ scope.row.stationname }}
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="进站时间" width="">
-        <template slot-scope="scope">
-          <div @click="showForm(scope.row)">
-            <div v-for="item in scope.row.stationdetail" :key="item">
-              {{ item }}
+    <div style="overflow: auto;">
+      <el-table v-loading="loading" :data="tableLine" border style="width: 100%; margin-bottom: 50px">
+        <el-table-column prop="stationnum" label="编号" width="100">
+          <template slot-scope="scope">
+            <div @click="showForm(scope.row)">
+              {{ scope.row.stationnum }}
             </div>
-          </div>
-        </template>
-      </el-table-column>
-      <!--<el-table-column prop="" label="车牌" width="" />-->
-    </el-table>
+          </template>
+        </el-table-column>
+        <el-table-column prop="stationname" label="站台" width="">
+          <template slot-scope="scope">
+            <div @click="showForm(scope.row)">
+              {{ scope.row.stationname }}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="进站时间" width="">
+          <template slot-scope="scope">
+            <div @click="showForm(scope.row)">
+              <div v-for="item in scope.row.stationdetail" :key="item">
+                {{ item }}
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <!--<el-table-column prop="" label="车牌" width="" />-->
+      </el-table>
+    </div>
 
     <float-button
       :text="Flush"
