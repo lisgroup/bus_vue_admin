@@ -139,6 +139,7 @@ export default {
           this.ruleForm.station_num = this.rowData.stationnum
           this.ruleForm.station_id = this.rowData.stationid
           this.ruleForm.station_name = this.rowData.stationname
+          this.ruleForm.line_from_to = this.rowData.lineFromTo
           // console.log(this.ruleForm)
           notice_setting(this.ruleForm).then(res => {
             // 弹窗成功，并关闭窗口

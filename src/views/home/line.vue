@@ -143,6 +143,7 @@ export default {
       this.dialogVisible = true
       row.lineid = this.href.lineID
       row.linename = this.lineName
+      row.lineFromTo = this.href.to
       this.selectedRowData = row
     },
     closeDialog() {
