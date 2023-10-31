@@ -11,7 +11,7 @@ export function getList(params) {
 
 export function report(params) {
   return request({
-    url: '/api/admin/report',
+    url: '/api/user/login_log_report',
     method: 'get',
     params
   })
