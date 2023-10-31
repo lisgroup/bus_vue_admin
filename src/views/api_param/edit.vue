@@ -95,7 +95,7 @@ export default {
           this.form.is_need = (response.data.is_need === 1)
           this.form.state = (response.data.state === 1)
         } else {
-          this.$message.error(response.reason)
+          this.$message.error(response.msg)
         }
       })
     },
@@ -114,7 +114,7 @@ export default {
               })
               this.$router.push({ path: this.redirect || '/' })
             } else {
-              this.$message.error(response.reason)
+              this.$message.error(response.msg)
             }
           })
         } else {

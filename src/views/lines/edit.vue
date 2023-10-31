@@ -133,7 +133,7 @@ export default {
           this.form = response.data
           this.form.is_task = (response.data.is_task === 1)
         } else {
-          this.$message.error(response.reason)
+          this.$message.error(response.msg)
         }
       })
     },
@@ -152,7 +152,7 @@ export default {
               })
               this.$router.push({ path: this.redirect || '/' })
             } else {
-              this.$message.error(response.reason)
+              this.$message.error(response.msg)
             }
           })
         } else {

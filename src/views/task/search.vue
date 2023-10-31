@@ -157,7 +157,7 @@ export default {
           this.$router.push({ path: this.redirect || '/' })
         } else {
           this.listLoading = false
-          this.$message.error(response.reason)
+          this.$message.error(response.msg)
         }
       }).catch((err) => {
         this.listLoading = false
@@ -187,7 +187,7 @@ export default {
               this.list = response.data.data
               this.total = response.data.total
             } else {
-              this.$message.error(response.reason)
+              this.$message.error(response.msg)
             }
           })
         } else {

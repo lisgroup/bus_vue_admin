@@ -294,10 +294,10 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        startTask(row).then(res => {
-          // console.log(res)
+        startTask(row).then(response => {
+          // console.log(response)
           let msg = ''
-          if (res.code === 200) {
+          if (response.code === 200) {
             row.state = 1
             msg = 'success'
           } else {
@@ -305,7 +305,7 @@ export default {
           }
           this.$message({
             type: msg,
-            message: res.reason
+            message: response.msg
           })
         })
       }).catch(() => {
@@ -322,10 +322,10 @@ export default {
         type: 'warning',
         callback: action => {
           if (action === 'confirm') {
-            startTask(row).then(res => {
+            startTask(row).then(response => {
               // console.log(res)
               let msg = ''
-              if (res.code === 200) {
+              if (response.code === 200) {
                 row.state = 1
                 msg = 'success'
               } else {
@@ -333,7 +333,7 @@ export default {
               }
               this.$message({
                 type: msg,
-                message: res.reason
+                message: response.msg
               })
               this.initWebSocket()
             })
@@ -449,7 +449,7 @@ export default {
             this.fetchData()
             // this.$router.push({ path: this.redirect || '/' })
           } else {
-            this.$message.error(response.reason)
+            this.$message.error(response.msg)
           }
         })
         this.$message({
@@ -487,7 +487,7 @@ export default {
               this.list = response.data.data
               this.total = response.data.total
             } else {
-              this.$message.error(response.reason)
+              this.$message.error(response.msg)
             }
           })
         } else {
@@ -522,7 +522,7 @@ export default {
       // console.log(response)
       if (response.code !== 200) {
         this.$message({
-          message: response.reason,
+          message: response.msg,
           type: 'error'
         })
       } else {
@@ -545,7 +545,7 @@ export default {
               this.fetchData()
               // this.$router.push({ path: this.redirect || '/' })
             } else {
-              this.$message.error(response.reason)
+              this.$message.error(response.msg)
             }
           })
         } else {

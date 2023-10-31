@@ -140,7 +140,7 @@ export default {
         if (response.code === 200) {
           this.form = response.data
         } else {
-          this.$message.error(response.reason)
+          this.$message.error(response.msg)
         }
       })
     },
@@ -159,7 +159,7 @@ export default {
               })
               this.$router.push({ path: this.redirect || '/' })
             } else {
-              this.$message.error(response.reason)
+              this.$message.error(response.msg)
             }
           })
         } else {

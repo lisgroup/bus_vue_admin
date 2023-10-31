@@ -163,7 +163,7 @@ export default {
             this.fetchData()
             // this.$router.push({ path: this.redirect || '/' })
           } else {
-            this.$message.error(response.reason)
+            this.$message.error(response.msg)
           }
         })
         this.$message({

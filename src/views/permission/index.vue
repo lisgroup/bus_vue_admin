@@ -123,7 +123,7 @@ export default {
             this.fetchData()
             // this.$router.push({ path: this.redirect || '/' })
           } else {
-            this.$message.error(response.reason)
+            this.$message.error(response.msg)
           }
         })
         this.$message({
@@ -161,7 +161,7 @@ export default {
               this.list = response.data.data
               this.total = response.data.total
             } else {
-              this.$message.error(response.reason)
+              this.$message.error(response.msg)
             }
           })
         } else {

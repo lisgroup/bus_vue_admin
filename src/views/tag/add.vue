@@ -46,7 +46,7 @@ export default {
               })
               this.$router.push({ path: this.redirect || '/' })
             } else {
-              this.$message.error(response.reason)
+              this.$message.error(response.msg)
             }
           })
         } else {
