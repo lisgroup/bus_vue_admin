@@ -139,6 +139,16 @@ export default {
       this.$router.push({ name: 'bus', query: { linename: line }})
     },
     showForm(row) {
+      // 判断是否登录
+      if (!this.$store.getters.token) {
+        this.$message({
+          message: '请先登录',
+          type: 'warning'
+        })
+        // 跳转登录页并带上 ?redirect=当前的line页面
+        this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+        return false
+      }
       // console.log(row)
       this.dialogVisible = true
       row.lineid = this.href.lineID
