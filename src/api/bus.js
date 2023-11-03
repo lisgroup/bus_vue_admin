@@ -9,5 +9,5 @@ export function line(params) {
 }
 
 export function notice_setting(params) {
-  return request.post('/api/bus/notice_setting', params)
+  return request.post('/api/notice/add', params)
 }
