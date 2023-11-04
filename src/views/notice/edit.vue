@@ -5,7 +5,7 @@
       <el-row class="demo-autocomplete">
         <el-col :span="20">
           <el-select v-model="ruleForm.cycle" placeholder="选择周期" @change="handleSelectChange">
-            <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
+            <el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value"/>
           </el-select>
           <!--          <el-input-number v-show="showHour" v-model="ruleForm.hour" :max="23" :min="0" label="小时" @change="handleHour" />-->
           <!--          <span v-show="showHour">小时</span>-->
@@ -18,7 +18,7 @@
       <el-row class="demo-autocomplete">
         <el-col :span="10">
           <el-form-item prop="start_time">
-            <el-time-picker v-model="ruleForm.start_time" placeholder="选择时间" style="width: 100%;" />
+            <el-time-picker v-model="ruleForm.start_time" placeholder="选择时间" style="width: 100%;"/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -27,7 +27,7 @@
       <el-row class="demo-autocomplete">
         <el-col :span="10">
           <el-form-item prop="end_time">
-            <el-time-picker v-model="ruleForm.end_time" placeholder="选择时间" style="width: 100%;" />
+            <el-time-picker v-model="ruleForm.end_time" placeholder="选择时间" style="width: 100%;"/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -45,14 +45,14 @@
       </el-row>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+      <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
       <el-button @click="resetForm('ruleForm')">重置</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-import { edit } from '@/api/notice'
+import {edit, postEdit} from '@/api/notice'
 
 export default {
   data() {
@@ -76,15 +76,15 @@ export default {
         notice_time: 1
       },
       options: [
-        { value: 'day', label: '每天' },
-        { value: 'one', label: '一次' }
+        {value: 'day', label: '每天'},
+        {value: 'one', label: '一次'}
         // { value: 'hour', label: '每小时' },
         // { value: 'hour-n', label: 'N小时' },
         // { value: 'weekday', label: '工作日' }
       ],
       rules: {
         cycle: [
-          { required: true, message: '请选择执行周期', trigger: 'blur' }
+          {required: true, message: '请选择执行周期', trigger: 'blur'}
         ],
         // hour: [
         //   { required: true, message: '请输入小时', trigger: 'change' },
@@ -95,13 +95,13 @@ export default {
         //   { min: 0, max: 59, message: '请输入分钟', trigger: 'blur' }
         // ],
         start_time: [
-          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+          {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
         ],
         end_time: [
-          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+          {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
         ],
         j_key: [
-          { required: true, message: '请输入Server酱Key', trigger: 'blur' }
+          {required: true, message: '请输入Server酱Key', trigger: 'blur'}
         ]
       }
     }
@@ -110,10 +110,6 @@ export default {
     this.id = this.$route.params.id
     this.ruleForm.id = this.$route.params.id
     this.getTaskData(this.id)
-    // 字符串转时间
-    this.ruleForm.start_time = this.changeTime(this.ruleForm.start_time)
-    this.ruleForm.ent_time = this.changeTime(this.ruleForm.ent_time)
-    console.log(this.ruleForm.start_time, this.ruleForm.ent_time)
   },
   methods: {
     changeTime(time) {
@@ -127,13 +123,15 @@ export default {
     },
     getTaskData(id) {
       // this.id = this.$route.params.id
+      const that = this
       edit(id).then(response => {
-        console.log(response)
-        this.loading = false
+        that.loading = false
         if (response.code === 200) {
-          console.log(response.data)
-          this.ruleForm = response.data
-          console.log(this.ruleForm)
+          // console.log(response.data)
+          that.ruleForm = response.data
+          // 字符串转时间
+          that.ruleForm.start_time = that.changeTime(response.data.start_time)
+          that.ruleForm.end_time = new Date("2020-02-02 " + response.data.end_time)
         } else {
           this.$message.error(response.msg)
         }
@@ -161,24 +159,29 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.loading = true
           // this.ruleForm.line_id = this.rowData.lineid
           // this.ruleForm.line_name = this.rowData.linename
           // this.ruleForm.station_num = this.rowData.stationnum
           // this.ruleForm.station_id = this.rowData.stationid
           // this.ruleForm.station_name = this.rowData.stationname
           // this.ruleForm.line_from_to = this.rowData.lineFromTo
-          console.log(this.ruleForm)
-          // postAdd(this.ruleForm).then(res => {
-          //   // 弹窗成功，并关闭窗口
-          //   this.$message({
-          //     message: '通知任务保存成功',
-          //     type: 'success'
-          //   })
-          //   // 触发自定义事件，通知index.vue关闭弹窗
-          //   this.$emit('close-dialog')
-          // }).catch(err => {
-          //   return err
-          // })
+          // console.log(this.ruleForm)
+          postEdit(this.ruleForm.id, this.ruleForm).then(response => {
+            this.loading = false
+            if (response.code === 200) {
+              this.$message({
+                message: '操作成功',
+                type: 'success'
+              })
+              this.$router.push({path: this.redirect || '/notice/index'})
+            } else {
+              this.$message.error(response.msg)
+            }
+          }).catch(err => {
+            this.$message('error submit!')
+            return err
+          })
           setTimeout(() => {
             this.loading = false
           }, 500)

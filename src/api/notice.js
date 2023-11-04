@@ -18,7 +18,7 @@ export function edit(id) {
 }
 
 export function postEdit(id, params) {
-  return request.post('/api/notice', params)
+  return request.post('/api/notice/update', params)
 }
 
 export function deleteAct(id) {

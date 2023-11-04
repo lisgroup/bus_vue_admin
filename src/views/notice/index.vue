@@ -142,10 +142,18 @@ export default {
       this.listLoading = true
       const params = Object.assign({'page': this.listQuery.page}, {'page_size': this.perpage})
       getList(params).then(response => {
-        console.log(response)
-        this.list = response.data.notice
+        // console.log(response)
+        // this.list = response.data.notice
+        // this.total = response.data.total
         this.listLoading = false
-        this.total = response.data.total
+        if (response.code === 200) {
+          this.form.isShow = true
+          // console.log(response.data)
+          this.list = response.data.notice
+          this.total = response.data.total
+        } else {
+          this.$message.error(response.msg)
+        }
       })
     },
     handleEdit(index, row) {
@@ -206,7 +214,7 @@ export default {
             if (response.code === 200) {
               this.form.isShow = true
               // console.log(response.data)
-              this.list = response.data.data
+              this.list = response.data.notice
               this.total = response.data.total
             } else {
               this.$message.error(response.msg)
