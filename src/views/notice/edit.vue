@@ -52,20 +52,15 @@
 </template>
 
 <script>
-import { notice_setting } from '@/api/bus'
+import { edit } from '@/api/notice'
 
 export default {
-  props: {
-    rowData: {
-      type: Object,
-      required: true
-    }
-  },
   data() {
     return {
       showHour: true,
       showMinute: true,
       ruleForm: {
+        id: 0,
         cycle: 'day', // day=每天，one=一次 hour=每小时
         hour: 1,
         minute: 30,
@@ -111,7 +106,39 @@ export default {
       }
     }
   },
+  created() {
+    this.id = this.$route.params.id
+    this.ruleForm.id = this.$route.params.id
+    this.getTaskData(this.id)
+    // 字符串转时间
+    this.ruleForm.start_time = this.changeTime(this.ruleForm.start_time)
+    this.ruleForm.ent_time = this.changeTime(this.ruleForm.ent_time)
+    console.log(this.ruleForm.start_time, this.ruleForm.ent_time)
+  },
   methods: {
+    changeTime(time) {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const hour = time.split(':')[0];
+      const minutes = time.split(':')[1];
+      return new Date(year, month, day, hour, minutes);
+    },
+    getTaskData(id) {
+      // this.id = this.$route.params.id
+      edit(id).then(response => {
+        console.log(response)
+        this.loading = false
+        if (response.code === 200) {
+          console.log(response.data)
+          this.ruleForm = response.data
+          console.log(this.ruleForm)
+        } else {
+          this.$message.error(response.msg)
+        }
+      })
+    },
     handleSelectChange(value) {
       if (value === 'hour') {
         this.showHour = false
@@ -129,29 +156,29 @@ export default {
         this.showHour = true
         this.showMinute = true
       }
-      console.log('Selected Value:', value)
+      // console.log('Selected Value:', value)
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.ruleForm.line_id = this.rowData.lineid
-          this.ruleForm.line_name = this.rowData.linename
-          this.ruleForm.station_num = this.rowData.stationnum
-          this.ruleForm.station_id = this.rowData.stationid
-          this.ruleForm.station_name = this.rowData.stationname
-          this.ruleForm.line_from_to = this.rowData.lineFromTo
-          // console.log(this.ruleForm)
-          notice_setting(this.ruleForm).then(res => {
-            // 弹窗成功，并关闭窗口
-            this.$message({
-              message: '通知任务保存成功',
-              type: 'success'
-            })
-            // 触发自定义事件，通知index.vue关闭弹窗
-            this.$emit('close-dialog')
-          }).catch(err => {
-            return err
-          })
+          // this.ruleForm.line_id = this.rowData.lineid
+          // this.ruleForm.line_name = this.rowData.linename
+          // this.ruleForm.station_num = this.rowData.stationnum
+          // this.ruleForm.station_id = this.rowData.stationid
+          // this.ruleForm.station_name = this.rowData.stationname
+          // this.ruleForm.line_from_to = this.rowData.lineFromTo
+          console.log(this.ruleForm)
+          // postAdd(this.ruleForm).then(res => {
+          //   // 弹窗成功，并关闭窗口
+          //   this.$message({
+          //     message: '通知任务保存成功',
+          //     type: 'success'
+          //   })
+          //   // 触发自定义事件，通知index.vue关闭弹窗
+          //   this.$emit('close-dialog')
+          // }).catch(err => {
+          //   return err
+          // })
           setTimeout(() => {
             this.loading = false
           }, 500)

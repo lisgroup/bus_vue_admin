@@ -17,7 +17,7 @@
     <el-form-item label="开始时间" prop="start_time">
       <el-row class="demo-autocomplete">
         <el-col :span="10">
-          <el-form-item prop="start_time">
+          <el-form-item prop="date2">
             <el-time-picker v-model="ruleForm.start_time" placeholder="选择时间" style="width: 100%;" />
           </el-form-item>
         </el-col>
@@ -26,7 +26,7 @@
     <el-form-item label="结束时间" prop="end_time">
       <el-row class="demo-autocomplete">
         <el-col :span="10">
-          <el-form-item prop="end_time">
+          <el-form-item prop="date2">
             <el-time-picker v-model="ruleForm.end_time" placeholder="选择时间" style="width: 100%;" />
           </el-form-item>
         </el-col>
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { notice_setting } from '@/api/bus'
+import { postAdd } from '@/api/notice'
 
 export default {
   props: {
@@ -141,7 +141,7 @@ export default {
           this.ruleForm.station_name = this.rowData.stationname
           this.ruleForm.line_from_to = this.rowData.lineFromTo
           // console.log(this.ruleForm)
-          notice_setting(this.ruleForm).then(res => {
+          postAdd(this.ruleForm).then(res => {
             // 弹窗成功，并关闭窗口
             this.$message({
               message: '通知任务保存成功',
