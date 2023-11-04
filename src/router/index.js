@@ -41,7 +41,7 @@ export const routeAdmin = [
     component: Layout,
     redirect: '/api_excel/index',
     name: 'Excel-List',
-    meta: { title: '批量测试管理', icon: 'ico-table', roles: [Super, Admin, Customer] },
+    meta: { title: '批量测试管理', icon: 'ico-table', roles: [Super, Admin] },
     children: [
       { path: '/api_excel/edit/:id', name: 'EditExcel', component: () => import('@/views/api_excel/edit'), hidden: true },
       {
@@ -205,11 +205,38 @@ const routeTest = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
+
+// 管理一般路由
+export const routeCustomer = [
+  {
+    path: '/notice',
+    component: Layout,
+    redirect: '/notice/index',
+    name: 'Notice-List',
+    meta: { title: '通知管理', icon: 'ico-table', roles: [Super, Admin, Customer] },
+    children: [
+      { path: '/notice/edit/:id', name: 'EditNotice', component: () => import('@/views/notice/edit'), hidden: true },
+      {
+        path: '/notice/add',
+        name: 'AddNotice',
+        component: () => import('@/views/notice/add'),
+        meta: { title: '新增通知', icon: 'excel', roles: [Super, Admin, Customer] }
+      },
+      {
+        path: '/notice/index',
+        name: 'notice',
+        component: () => import('@/views/notice/index'),
+        meta: { title: '管理列表', icon: 'ico-aliyun', roles: [Super, Admin, Customer] }
+      }
+    ]
+  }
+]
+
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes = [...routeAdmin, ...routeSuper, ...routeTest]
+export const asyncRoutes = [...routeAdmin, ...routeSuper, ...routeTest, ...routeCustomer]
 
 // 基础路由
 const routeBase = [
