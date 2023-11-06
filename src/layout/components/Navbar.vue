@@ -16,7 +16,7 @@
               Home
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/lisgroup/laravel-vue-admin">
+          <a target="_blank" href="https://github.com/lisgroup/bus_vue_admin">
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
           <el-dropdown-item divided>

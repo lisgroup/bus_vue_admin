@@ -146,7 +146,10 @@ export default {
           type: 'warning'
         })
         // 跳转登录页并带上 ?redirect=当前的line页面
-        this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+        // & 替换为 %26
+        // console.log(this.$route.fullPath.replace(/&/g, '%26'));
+        this.$router.push(`/login?redirect=${this.$route.fullPath.replace(/&/g, '%26')}`)
+        // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
         return false
       }
       // console.log(row)
