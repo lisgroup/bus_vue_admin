@@ -17,7 +17,7 @@ npm install
 npm config set registry https://registry.npmmirror.com/
 npm install --registry=https://registry.npmmirror.com/
 
-# 启动测试服务，默认 http://localhost:9090
+# 启动测试服务，默认 http://localhost:9091
 npm run dev
 
 # Build for production with minification
@@ -28,7 +28,7 @@ npm run build --report
 ```
 
 
-浏览器访问 [http://localhost:9090/](http://localhost:9090/)
+浏览器访问 [http://localhost:9091/](http://localhost:9091/)
 
 ## 发布
 
