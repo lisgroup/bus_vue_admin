@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+export function registerSendCode(info) {
+  return request.post('/api/user/mail/code/send/register', info)
+}
+
+export function register(reg) {
+  return request.post('/api/user/register', reg)
+}
+
 export function login(userInfo) {
   return request.post('/api/user/login', userInfo)
 }

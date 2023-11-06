@@ -251,6 +251,7 @@ const routeBase = [
   { path: '/clipboard', name: 'clipboard', component: () => import('@/views/home/clipboard'), hidden: true },
   // { path: '/index', component: () => import('@/views/home/index'), hidden: true },
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
+  { path: '/register', component: () => import('@/views/login/register'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
 
   {

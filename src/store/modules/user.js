@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import {login, logout, getInfo, register} from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const state = {
@@ -33,6 +33,20 @@ const actions = {
     // const username = userInfo.username.trim()
     return new Promise((resolve, reject) => {
       login(userInfo).then(response => {
+        const data = response.data
+        setToken(data.access_token)
+        commit('SET_TOKEN', data.access_token)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // 注册
+  register({ commit }, userInfo) {
+    // const username = userInfo.username.trim()
+    return new Promise((resolve, reject) => {
+      register(userInfo).then(response => {
         const data = response.data
         setToken(data.access_token)
         commit('SET_TOKEN', data.access_token)
