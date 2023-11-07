@@ -205,7 +205,6 @@ const routeTest = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-
 // 管理一般路由
 export const routeCustomer = [
   {
