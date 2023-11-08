@@ -11,12 +11,12 @@
       <h3 class="login_title"> 邮 箱 验 证 码 注 册 </h3>
 
       <el-form-item
+        ref="email"
         label="邮箱"
         prop="email"
-        ref="email"
       >
         <el-input v-model="form.email" placeholder="请输入邮箱">
-          <el-select placeholder=""></el-select>
+          <el-select placeholder="" />
         </el-input>
       </el-form-item>
 
@@ -31,38 +31,37 @@
         </el-input>
       </el-form-item>
       <el-form-item
+        ref="username"
         label="用户名"
         prop="username"
-        ref="username"
       >
         <el-input v-model="form.username" placeholder="请输入用户名">
-          <el-select placeholder=""></el-select>
+          <el-select placeholder="" />
         </el-input>
       </el-form-item>
       <el-form-item
+        ref="password"
         label="密码"
         prop="password"
-        ref="password"
       >
-        <el-input type="password" v-model="form.password" placeholder="请输入密码">
-          <el-select placeholder="请输入密码"></el-select>
+        <el-input v-model="form.password" type="password" placeholder="请输入密码">
+          <el-select placeholder="请输入密码" />
         </el-input>
       </el-form-item>
 
       <el-form-item>
-        <el-button @click="submit" class="login_button" type="primary"> 登 录</el-button>
+        <el-button class="login_button" type="primary" @click="submit">登 录</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import {registerSendCode} from "@/api/user";
-import request from "@/utils/request";
-import {isvalidUsername} from "@/utils/validate";
+import { registerSendCode } from '@/api/user'
+import { isvalidUsername } from '@/utils/validate'
 
 export default {
-  name: "AppPhone",
+  name: 'Register',
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!isvalidUsername(value)) {
@@ -86,7 +85,7 @@ export default {
       if (!value) {
         callback(new Error('邮箱不能为空'))
       }
-      //正则表达式进行验证邮箱，从1开始，第二位是35789中的任意一位，以9数字结尾
+      // 正则表达式进行验证邮箱，从1开始，第二位是35789中的任意一位，以9数字结尾
       // ^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$
       // 邮箱格式校验
       if (!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(value)) {
@@ -98,7 +97,7 @@ export default {
       callback()
     }
     return {
-      btnTxt: "获取验证码",
+      btnTxt: '获取验证码',
       // 是否禁用  即点击之后一段时间内无法再点击
       disabled: false,
       time: 0,
@@ -111,52 +110,52 @@ export default {
       rules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         email: [
-          {required: true, trigger: 'blur', message: '请输入正确的邮箱'},
-          {required: true, trigger: 'blur', min: 3, max: 80, message: '长度不符合'},
-          {required: true, trigger: 'blur', validator: validateEmail}
+          { required: true, trigger: 'blur', message: '请输入正确的邮箱' },
+          { required: true, trigger: 'blur', min: 3, max: 80, message: '长度不符合' },
+          { required: true, trigger: 'blur', validator: validateEmail }
         ],
         code: [
-          {required: true, trigger: 'blur', message: '请输入4位验证码'},
-          {required: true, trigger: 'blur', min: 6, max: 6, message: '验证码错误'}
+          { required: true, trigger: 'blur', message: '请输入4位验证码' },
+          { required: true, trigger: 'blur', min: 6, max: 6, message: '验证码错误' }
         ],
-        password: [{required: true, trigger: 'blur', validator: validatePass}],
+        password: [{ required: true, trigger: 'blur', validator: validatePass }]
       }
     }
   },
   methods: {
-    //获取手机验证码方法
+    // 获取手机验证码方法
     getCode() {
       // 校验邮箱码
       if (!this.form.email) {
-        //号码校验不通过
+        // 号码校验不通过
         this.$message({
           message: '请输入邮箱',
-          type: 'warning',
-        });
-        //正则判断 从1开始，第二位是35789中的任意一位，以9数字结尾
+          type: 'warning'
+        })
+        // 正则判断 从1开始，第二位是35789中的任意一位，以9数字结尾
         // if (!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(value)) {
         //   callback(new Error('邮箱格式不正确'))
         // }
       } else if (!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.form.email)) {
         // 失去焦点后自动触发校验邮箱规则
       } else {
-        this.time = 60;
-        this.disabled = true;
-        //调用倒计时方法
-        this.timer();
+        this.time = 60
+        this.disabled = true
+        // 调用倒计时方法
+        this.timer()
         // 封装的axios接口
         registerSendCode({
-          email: this.form.email,
-        }).then(({data}) => {
+          email: this.form.email
+        }).then(({ data }) => {
           if (data.code === 200) {
             this.$message({
               message: '验证成功',
-              type: 'success',
+              type: 'success'
             })
           } else {
             this.$message({
               message: '发送失败',
-              type: 'warning',
+              type: 'warning'
             })
           }
         })
@@ -165,14 +164,14 @@ export default {
     // 倒计时方法
     timer() {
       if (this.time > 0) {
-        this.time--;
-        // console.log(this.time);
-        this.btnTxt = this.time + "s后重新获取验证码";
-        setTimeout(this.timer, 1000);
+        this.time--
+        // console.log(this.time)
+        this.btnTxt = this.time + 's后重新获取验证码'
+        setTimeout(this.timer, 1000)
       } else {
-        this.time = 0;
-        this.btnTxt = "获取验证码";
-        this.disabled = false;
+        this.time = 0
+        this.btnTxt = '获取验证码'
+        this.disabled = false
       }
     },
     // 提交按钮
