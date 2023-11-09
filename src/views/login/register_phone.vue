@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import {registerSendCode} from "@/api/user";
+import { registerSendCode } from "@/api/user"
 
 export default {
   name: "AppPhone",
@@ -59,7 +59,7 @@ export default {
       callback()
     }
     return {
-      btnTxt: "获取验证码",
+      btnTxt: '获取验证码',
       // 是否禁用  即点击之后一段时间内无法再点击
       disabled: false,
       time: 0,
@@ -89,15 +89,15 @@ export default {
         this.$message({
           message: '请输入手机号',
           type: 'warning',
-        });
+        })
         //正则判断 从1开始，第二位是35789中的任意一位，以9数字结尾
       } else if (!/1[35789]\d{9}/.test(this.form.CellPhone)) {
         // 失去焦点后自动触发校验手机号规则
       } else {
-        this.time = 60;
-        this.disabled = true;
+        this.time = 60
+        this.disabled = true
         //调用倒计时方法
-        this.timer();
+        this.timer()
         // 封装的axios接口
         registerSendCode({
           CellPhone: this.form.CellPhone,
@@ -119,14 +119,14 @@ export default {
     // 倒计时方法
     timer() {
       if (this.time > 0) {
-        this.time--;
-        // console.log(this.time);
-        this.btnTxt = this.time + "s后重新获取验证码";
-        setTimeout(this.timer, 1000);
+        this.time--
+        // console.log(this.time)
+        this.btnTxt = this.time + 's后重新获取验证码'
+        setTimeout(this.timer, 1000)
       } else {
-        this.time = 0;
-        this.btnTxt = "获取验证码";
-        this.disabled = false;
+        this.time = 0
+        this.btnTxt = '获取验证码'
+        this.disabled = false
       }
     },
     // 提交按钮
