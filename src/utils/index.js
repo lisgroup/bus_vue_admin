@@ -108,3 +108,9 @@ export function param2Obj(url) {
       '"}'
   )
 }
+
+export function isWeiXin () {
+  const ua = window.navigator.userAgent.toLowerCase()
+  // ua.indexOf('micromessenger')true-微信端，false-其他
+  return ua.indexOf('micromessenger') > -1;
+}
