@@ -196,6 +196,22 @@ export const routeSuper = [
         meta: { title: '角色管理', icon: 'role', roles: [Super] }
       }
     ]
+  },
+  // 微信菜单管理
+  {
+    path: '/wechat',
+    component: Layout,
+    redirect: '/wechat',
+    name: '微信',
+    meta: { title: '微信管理', icon: 'wechat', roles: [Super] },
+    children: [
+      {
+        path: 'menu',
+        name: '微信菜单管理',
+        component: () => import('@/views/wechat/menu'),
+        meta: { title: '微信菜单管理', icon: 'wechat', roles: [Super] }
+      }
+    ]
   }
 
 ]
